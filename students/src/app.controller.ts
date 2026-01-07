@@ -6,12 +6,17 @@ import { MessagePattern } from '@nestjs/microservices';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @MessagePattern("student-get")
+  @MessagePattern('student-get')
   getGroups(data: string) {
-    console.log(12, data)
+    console.log(12, data);
     return {
       success: true,
-      data:[{name:"Student"}]
-    }
+      data: [{ name: 'Student' }],
+    };
+  }
+
+  @MessagePattern('student-create')
+  async createStudent(data: any) {
+    return this.appService.saveStudent(data);
   }
 }
