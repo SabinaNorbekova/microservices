@@ -6,12 +6,14 @@ import { MessagePattern } from '@nestjs/microservices';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @MessagePattern("group-get")
-  getGroups(data: string) {
-    console.log(12, data)
-    return {
-      success: true,
-      data:[{name:"Ali"}]
-    }
+  @MessagePattern('groups-get')
+  async getGroups() {
+    const groups = await this.appService.getAllGroups();
+    return { success: true, data: groups };
+  }
+
+  @MessagePattern('groups-create')
+  async createGroup(data: any) {
+    return this.appService.createGroup(data);
   }
 }

@@ -7,16 +7,21 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @MessagePattern('student-get')
-  getGroups(data: string) {
-    console.log(12, data);
+  async getStudents() {
+    const students = await this.appService.getAllStudents();
     return {
       success: true,
-      data: [{ name: 'Student' }],
+      data: students,
     };
   }
 
   @MessagePattern('student-create')
   async createStudent(data: any) {
-    return this.appService.saveStudent(data);
+    try {
+      const result = await this.appService.saveStudent(data);
+      return { success: true, result };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   }
 }

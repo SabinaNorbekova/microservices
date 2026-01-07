@@ -7,8 +7,8 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Teacher {
-  id      Int     @id @default(autoincrement())
-  name    String
-  subject String
+model Group {
+  id    Int     @id @default(autoincrement())
+  name  String
+  level String?
 }
